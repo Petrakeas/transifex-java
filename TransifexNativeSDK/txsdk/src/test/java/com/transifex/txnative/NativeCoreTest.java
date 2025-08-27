@@ -543,7 +543,7 @@ public class NativeCoreTest {
     @Test
     @Config(qualifiers = "sl")
     public void testGetLocalizedQuantityString_androidUsesSLAndICUStringWithoutOthersPlural_returnNull() {
-        // https://unicode-org.github.io/cldr-staging/charts/37/supplemental/language_plural_rules.html#sl
+        // https://www.unicode.org/cldr/charts/45/supplemental/language_plural_rules.html#sl
 
         // In this test, the ICU only has the "ONE" plural. Since the "OTHERS" plural does not exist,
         // we expect "null" to be returned for any given quantity.

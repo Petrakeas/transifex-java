@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import com.transifex.common.LocaleData;
 import com.transifex.common.Plurals;
 import com.transifex.txnative.cache.TxCache;
+import com.transifex.txnative.cache.TxCacheHelper;
 import com.transifex.txnative.cache.TxStandardCache;
 import com.transifex.txnative.missingpolicy.MissingPolicy;
 import com.transifex.txnative.missingpolicy.SourceStringPolicy;
@@ -222,7 +223,7 @@ public class NativeCore {
 
         String translatedString = null;
         if (mLocaleState.getResolvedLocale() != null) {
-            translatedString = mCache.get(txResources.getResourceEntryName(id),
+            translatedString = TxCacheHelper.get(mCache, txResources.getResourceEntryName(id), id,
                     mLocaleState.getResolvedLocale());
         }
 
@@ -275,7 +276,7 @@ public class NativeCore {
         // Get ICU string from Cache
         String icuString = null;
         if (mLocaleState.getResolvedLocale() != null) {
-            icuString = mCache.get(txResources.getResourceEntryName(id),
+            icuString = TxCacheHelper.get(mCache, txResources.getResourceEntryName(id), id,
                     mLocaleState.getResolvedLocale());
         }
 
@@ -306,7 +307,7 @@ public class NativeCore {
      * @return The source string, plus possibly styled text information as spans.
      */
     @NonNull CharSequence getSourceString(@NonNull TxResources txResources, @StringRes int id) {
-        String sourceString = mCache.get(txResources.getResourceEntryName(id),
+        String sourceString = TxCacheHelper.get(mCache, txResources.getResourceEntryName(id), id,
                 mLocaleState.getSourceLocale());
         return (!TextUtils.isEmpty(sourceString)) ?
                 getSpannedString(sourceString) : mSourceLocaleResources.getText(id);
@@ -328,7 +329,7 @@ public class NativeCore {
      */
     @NonNull CharSequence getSourceQuantityString(@NonNull TxResources txResources, @PluralsRes int id, int quantity) {
         // Get ICU string from Cache
-        String sourceIcuString = mCache.get(txResources.getResourceEntryName(id),
+        String sourceIcuString = TxCacheHelper.get(mCache, txResources.getResourceEntryName(id), id,
                 mLocaleState.getSourceLocale());
 
         // Get quantity String from ICU string
